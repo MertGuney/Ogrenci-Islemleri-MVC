@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MvcOkulModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TBL_Dersler">
+    <Key>
+      <PropertyRef Name="DERSID" />
+    </Key>
+    <Property Name="DERSID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DERSAD" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="TBL_Kulupler">
+    <Key>
+      <PropertyRef Name="KULUPID" />
+    </Key>
+    <Property Name="KULUPID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KULUPAD" Type="varchar" MaxLength="30" />
+    <Property Name="KULUPKONTENJAN" Type="smallint" />
+  </EntityType>
+  <EntityType Name="TBL_Notlar">
+    <Key>
+      <PropertyRef Name="NOTID" />
+    </Key>
+    <Property Name="NOTID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DERSID" Type="tinyint" />
+    <Property Name="OGRID" Type="int" />
+    <Property Name="SINAV1" Type="tinyint" />
+    <Property Name="SINAV2" Type="tinyint" />
+    <Property Name="SINAV3" Type="tinyint" />
+    <Property Name="PROJE" Type="tinyint" />
+    <Property Name="ORTALAMA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="DURUM" Type="bit" />
+  </EntityType>
+  <EntityType Name="TBL_Ogrenciler">
+    <Key>
+      <PropertyRef Name="OGRENCIID" />
+    </Key>
+    <Property Name="OGRENCIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OGRAD" Type="varchar" MaxLength="20" />
+    <Property Name="OGRSOYAD" Type="varchar" MaxLength="20" />
+    <Property Name="OGRFOTOGRAF" Type="varchar" MaxLength="200" />
+    <Property Name="OGRCINSIYET" Type="varchar" MaxLength="5" />
+    <Property Name="OGRKULUP" Type="tinyint" />
+  </EntityType>
+  <Association Name="FK_TBL_Notlar_TBL_Dersler">
+    <End Role="TBL_Dersler" Type="Self.TBL_Dersler" Multiplicity="0..1" />
+    <End Role="TBL_Notlar" Type="Self.TBL_Notlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_Dersler">
+        <PropertyRef Name="DERSID" />
+      </Principal>
+      <Dependent Role="TBL_Notlar">
+        <PropertyRef Name="DERSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBL_Notlar_TBL_Ogrenciler">
+    <End Role="TBL_Ogrenciler" Type="Self.TBL_Ogrenciler" Multiplicity="0..1" />
+    <End Role="TBL_Notlar" Type="Self.TBL_Notlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_Ogrenciler">
+        <PropertyRef Name="OGRENCIID" />
+      </Principal>
+      <Dependent Role="TBL_Notlar">
+        <PropertyRef Name="OGRID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBL_Ogrenciler_TBL_Kulupler">
+    <End Role="TBL_Kulupler" Type="Self.TBL_Kulupler" Multiplicity="0..1" />
+    <End Role="TBL_Ogrenciler" Type="Self.TBL_Ogrenciler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBL_Kulupler">
+        <PropertyRef Name="KULUPID" />
+      </Principal>
+      <Dependent Role="TBL_Ogrenciler">
+        <PropertyRef Name="OGRKULUP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MvcOkulModelStoreContainer">
+    <EntitySet Name="TBL_Dersler" EntityType="Self.TBL_Dersler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBL_Kulupler" EntityType="Self.TBL_Kulupler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBL_Notlar" EntityType="Self.TBL_Notlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBL_Ogrenciler" EntityType="Self.TBL_Ogrenciler" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TBL_Notlar_TBL_Dersler" Association="Self.FK_TBL_Notlar_TBL_Dersler">
+      <End Role="TBL_Dersler" EntitySet="TBL_Dersler" />
+      <End Role="TBL_Notlar" EntitySet="TBL_Notlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBL_Notlar_TBL_Ogrenciler" Association="Self.FK_TBL_Notlar_TBL_Ogrenciler">
+      <End Role="TBL_Ogrenciler" EntitySet="TBL_Ogrenciler" />
+      <End Role="TBL_Notlar" EntitySet="TBL_Notlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBL_Ogrenciler_TBL_Kulupler" Association="Self.FK_TBL_Ogrenciler_TBL_Kulupler">
+      <End Role="TBL_Kulupler" EntitySet="TBL_Kulupler" />
+      <End Role="TBL_Ogrenciler" EntitySet="TBL_Ogrenciler" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

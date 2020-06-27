@@ -1,0 +1,32 @@
+﻿@model OgrenciNotMvc.Models.EntityFramework.TBL_Notlar
+@{
+    ViewBag.Title = "NotGetir";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Guncelle", "Notlar", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Öğrenci ID</label>
+        @Html.TextBoxFor(m => m.OGRID, new { @class = "form-control" })
+        <label>Sınav 1</label>
+        @Html.TextBoxFor(m => m.SINAV1, new { @class = "form-control" })
+        <label>Sınav 2</label>
+        @Html.TextBoxFor(m => m.SINAV2, new { @class = "form-control" })
+        <label>Sınav 3</label>
+        @Html.TextBoxFor(m => m.SINAV3, new { @class = "form-control" })
+        <label>Proje</label>
+        @Html.TextBoxFor(m => m.PROJE, new { @class = "form-control" })
+        <label>Ortalama</label>
+        @Html.TextBoxFor(m => m.ORTALAMA, new { @Value = @ViewBag.ort, @class = "form-control" })
+        <label>Durum</label>
+        @Html.TextBoxFor(m => m.DURUM, new { @class = "form-control" })
+    </div>
+    @Html.HiddenFor(m => m.DERSID)
+    <div style="margin-top:10px;">
+        <button type="submit" name="islem" value="Hesapla">Hesapla</button>
+    </div>
+    <div style="margin-top:10px;">
+        <button type="submit" name="islem" value="Guncelle">Güncelle</button>
+    </div>
+}
+
